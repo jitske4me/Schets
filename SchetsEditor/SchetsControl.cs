@@ -2,12 +2,15 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace SchetsEditor
 {   public class SchetsControl : UserControl
     {   private Schets schets;
         private Color penkleur;
 
+
+        public List<Figure> figures;     //declaring a member variable for the list of figures next to the bitmap
         public Color PenKleur
         { get { return penkleur; }
         }
@@ -15,9 +18,12 @@ namespace SchetsEditor
         { get { return schets;   }
         }
         public SchetsControl()
-        {   this.BorderStyle = BorderStyle.Fixed3D;
+        {
+            figures = new List<Figure>();   //initializing the figures with an empty figure list 
+            this.BorderStyle = BorderStyle.Fixed3D;
             this.schets = new Schets();
             this.Paint += this.teken;
+            //DrawAll(figures);
             this.Resize += this.veranderAfmeting;
             this.veranderAfmeting(null, null);
         }
@@ -53,5 +59,14 @@ namespace SchetsEditor
         {   string kleurNaam = ((ToolStripMenuItem)obj).Text;
             penkleur = Color.FromName(kleurNaam);
         }
+        /*
+        public void DrawAll(List<Figure> figures)
+        {
+            for (int i = 0; i < figures.Count; i++)                                   
+            {
+                figures[i].DrawFigure(new Graphics());
+            }
+        }
+        */
     }
 }

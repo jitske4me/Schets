@@ -8,12 +8,11 @@ namespace SchetsEditor
     {
         private Bitmap bitmap;
 
-        List<Figure> figures { get; set; }     //declaring a member variable for the list of figures next to the bitmap
 
         public Schets()
         {
             bitmap = new Bitmap(1, 1);
-            figures = new List<Figure>();   //initializing the figures with an empty figure list 
+            
         }
         public Graphics BitmapGraphics
         {
@@ -50,34 +49,35 @@ namespace SchetsEditor
     }
     public class Figure     //defining a type "figure", of which the objects will represent the user-drawn figures and stored in the figures list and painted on the bitmap from there.
     {
-        ISchetsTool soort;
+        String soort;
         Point startpunt;
         Point endpunt;
         Brush kleur;
         String text;
 
-        public Figure(ISchetsTool tempSoort, Point tempStartpunt, Point tempEndpunt, Brush tempKleur) // this is a second constructor for when there is no text. Is there a better way for optional parameters?
+        public Figure(String tempSoort, Point tempStartpunt, Point tempEndpunt, Brush tempKleur, String tempText)
         {
-            soort = tempSoort;
-            startpunt = tempStartpunt;
-            endpunt = tempEndpunt;
-            kleur = tempKleur;
+            this.soort = tempSoort;
+            this.startpunt = tempStartpunt;
+            this.endpunt = tempEndpunt;
+            this.kleur = tempKleur;
+            this.text = tempText;
         }
+        public void DrawFigure(Graphics g)
+        {
+            if (this.soort == "RechthoekTool")                                                                                    //this line might activate VolRechthoekTools as well
+                g.DrawRectangle(TweepuntTool.MaakPen(this.kleur, 3), TweepuntTool.Punten2Rechthoek(this.startpunt, this.endpunt));
+            else if (this.soort == "VolRechthoekTool")                                                                            //instead of giving a type we might just use a string like if this.soort == "RechthoekTool"
+                g.FillRectangle(this.kleur, TweepuntTool.Punten2Rechthoek(this.startpunt, this.endpunt));
+            else if (this.soort == "CircleTool")
+                g.DrawEllipse(TweepuntTool.MaakPen(this.kleur, 3), TweepuntTool.Punten2Rechthoek(startpunt, endpunt));
+            else if (this.soort == "VolCircleTool")
+                g.FillEllipse(this.kleur, TweepuntTool.Punten2Rechthoek(this.startpunt, this.endpunt));
+            else if (this.soort == "LijnTool")
+                g.DrawLine(TweepuntTool.MaakPen(this.kleur, 3), this.startpunt, this.endpunt);
 
-        public Figure(ISchetsTool tempSoort, Point tempStartpunt, Point tempEndpunt, Brush tempKleur, String tempText)
-        {
-            soort = tempSoort;
-            startpunt = tempStartpunt;
-            endpunt = tempEndpunt;
-            kleur = tempKleur;
-            text = tempText;
-        }
-        public void DrawFigure(Graphics gr)
-        {
-            if (this.soort is RechthoekTool)    //this line might activate VolRechthoekTools as well
-                gr.DrawRectangle(TweepuntTool.MaakPen(this.kleur, 3), TweepuntTool.Punten2Rechthoek(this.startpunt, this.endpunt));
-            else if (this.soort is VolRechthoekTool)
-                ;
+            
+
         }        
     }
 }
