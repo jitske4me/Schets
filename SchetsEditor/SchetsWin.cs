@@ -119,10 +119,10 @@ namespace SchetsEditor
             while((line = reader.ReadLine()) != null)
             {
                 string[] vars = line.Split(';');
-                Figure tempfig = new Figure;
+                //Figure tempfig = new Figure();
 
-                Figure.soort = vars[0];
-                Figure.startpunt.X = vars[1];
+                //Figure.soort = vars[0];
+                //Figure.startpunt.X = vars[1];
 
                 /*
                 schetscontrol.figures[t].soort + ";"
