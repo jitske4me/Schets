@@ -1,0 +1,2 @@
+RechthoekTool;167;144;562;441;System.Drawing.SolidBrush;;
+RechthoekTool;56;232;202;208;System.Drawing.SolidBrush;;

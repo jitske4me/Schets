@@ -1,0 +1,4 @@
+VolRechthoekTool;119;147;344;330;Black;;
+VolRechthoekTool;476;111;65;228;Red;;
+LijnTool;24;90;92;311;Red;;
+VolCircleTool;55;355;325;377;Red;;

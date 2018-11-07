@@ -1,0 +1,8 @@
+PenTool;108;99;114;107;Black;;
+PenTool;114;107;136;139;Black;;
+PenTool;136;139;167;189;Black;;
+PenTool;167;189;167;190;Black;;
+PenTool;167;190;167;190;Black;;
+RechthoekTool;109;153;164;240;Black;;
+VolRechthoekTool;105;226;275;300;Black;;
+VolRechthoekTool;308;142;404;290;Green;;

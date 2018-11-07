@@ -39,7 +39,7 @@ namespace SchetsEditor
             if (c >= 32)
             {
 
-                s.figures.Add(new Figure("TekstTool", startpunt, startpunt, kwast, c.ToString()));     
+                s.figures.Add(new Figure("TekstTool", startpunt, startpunt, s.PenKleur, c.ToString()));     ////////
 
                 Graphics gr = s.MaakBitmapGraphics();
                 
@@ -97,7 +97,7 @@ namespace SchetsEditor
         }
         public override void Compleet(SchetsControl s, Graphics g, Point p1, Point p2)
         {
-            s.figures.Add(new Figure("RechthoekTool", p1, p2, kwast, ""));
+            s.figures.Add(new Figure("RechthoekTool", p1, p2, s.PenKleur, ""));
             s.figures[s.figures.Count - 1].DrawFigure(g);
         }
     }
@@ -108,7 +108,7 @@ namespace SchetsEditor
 
         public override void Compleet(SchetsControl s,Graphics g, Point p1, Point p2)
         {   
-            s.figures.Add(new Figure("VolRechthoekTool", p1, p2, kwast, ""));
+            s.figures.Add(new Figure("VolRechthoekTool", p1, p2, s.PenKleur, ""));
             for (int i = 0; i < s.figures.Count; i++)
             {
                 s.figures[i].DrawFigure(g);
@@ -126,7 +126,7 @@ namespace SchetsEditor
         }
         public override void Compleet(SchetsControl s, Graphics g, Point p1, Point p2)
         {
-            s.figures.Add(new Figure("CircleTool", p1, p2, kwast, ""));
+            s.figures.Add(new Figure("CircleTool", p1, p2, s.PenKleur, ""));
             for (int i = 0; i < s.figures.Count; i++)
             {
                 s.figures[i].DrawFigure(g);
@@ -144,7 +144,7 @@ namespace SchetsEditor
         }
         public override void Compleet(SchetsControl s, Graphics g, Point p1, Point p2)
         {
-            s.figures.Add(new Figure("VolCircleTool", p1, p2, kwast, ""));
+            s.figures.Add(new Figure("VolCircleTool", p1, p2, s.PenKleur, ""));
             for (int i = 0; i < s.figures.Count; i++)
             {
                 s.figures[i].DrawFigure(g);
@@ -162,7 +162,7 @@ namespace SchetsEditor
             }
             public override void Compleet(SchetsControl s, Graphics g, Point p1, Point p2)
             {
-                s.figures.Add(new Figure("LijnTool", p1, p2, kwast, ""));
+                s.figures.Add(new Figure("LijnTool", p1, p2, s.PenKleur, ""));
                 for (int i = 0; i < s.figures.Count; i++)
                 {
                     s.figures[i].DrawFigure(g);
@@ -182,7 +182,7 @@ namespace SchetsEditor
         
         public override void Compleet(SchetsControl s, Graphics g, Point p1, Point p2)
         {
-            s.figures.Add(new Figure("PenTool", p1, p2, kwast, ""));
+            s.figures.Add(new Figure("PenTool", p1, p2, s.PenKleur, ""));
             for (int i = 0; i < s.figures.Count; i++)
             {
                 s.figures[i].DrawFigure(g);

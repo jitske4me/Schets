@@ -42,44 +42,24 @@ namespace SchetsEditor
             this.Close();
         }
 
-
-
         private void opslaan(object obj, EventArgs ea)
         {
-            // format : public Figure(String tempSoort, Point tempStartpunt, Point tempEndpunt, Brush tempKleur, String tempText)
-            // try catch erin?
-
-            //List <Figure> h = schetscontrol.figures;
-            //int x = schetscontrol.figures[entries].startpunt.X;
-
 
             SaveFileDialog dialoog = new SaveFileDialog();
             dialoog.Filter = "Tekstfiles|*.txt|Alle files|*.*";
             dialoog.Title = "Tekening opslaan als ...";
 
-
             if (dialoog.ShowDialog() == DialogResult.OK)
-            {
-                this.Text = dialoog.FileName;
                 schrijfNaarTxt();
-            }
-
-
-
+          
         }
-
-
 
         private void schrijfNaarTxt()
         {
-            int entries = schetscontrol.figures.Count - 1;
-            Console.WriteLine(entries);
-            //Figure()
+            int entries = schetscontrol.figures.Count;
 
             StreamWriter writer = new StreamWriter(this.Text);
 
-
-            //schetscontrol.figures
             for (int t = 0; t < entries; t++)
             {
                 writer.WriteLine(schetscontrol.figures[t].soort + ";"
@@ -87,7 +67,7 @@ namespace SchetsEditor
                                 + schetscontrol.figures[t].startpunt.Y.ToString() + ";"
                                 + schetscontrol.figures[t].endpunt.X.ToString() + ";"
                                 + schetscontrol.figures[t].endpunt.Y.ToString() + ";"
-                                + schetscontrol.figures[t].kleur.ToString() + ";"
+                                + schetscontrol.figures[t].kleur.Name + ";"
                                 + schetscontrol.figures[t].text + ";"
                                 );
             }
@@ -103,14 +83,13 @@ namespace SchetsEditor
             dialoog.Title = "Tekening openen...";
             if (dialoog.ShowDialog() == DialogResult.OK)
             {
-                List<Figure> templist;
-                templist = new List<Figure> { };
-                leesVanTxt(templist, dialoog.FileName);
-                schetscontrol.figures = templist;
+                schetscontrol.figures = leesVanTxt(dialoog.FileName);
+                schetscontrol.Invalidate();
             }
+            
         }
 
-        private List<Figure> leesVanTxt(List<Figure> list, string fileNaam)
+        private List<Figure> leesVanTxt(string fileNaam)
         {
             StreamReader reader = new StreamReader(fileNaam);
             List<Figure> savedList = new List<Figure> { };
@@ -119,35 +98,19 @@ namespace SchetsEditor
             while ((line = reader.ReadLine()) != null)
             {
                 string[] vars = line.Split(';');
-                //Figure tempfig = new Figure();
 
-                //Figure.soort = vars[0];
-                //Figure.startpunt.X = vars[1];
-
-                /*
-                schetscontrol.figures[t].soort + ";"
-                                + schetscontrol.figures[t].startpunt.X.ToString() + ";"
-                                + schetscontrol.figures[t].startpunt.Y.ToString() + ";"
-                                + schetscontrol.figures[t].endpunt.X.ToString() + ";"
-                                + schetscontrol.figures[t].endpunt.Y.ToString() + ";"
-                                + schetscontrol.figures[t].kleur.ToString() + ";"
-                                + schetscontrol.figures[t].text + ";"
-                            
-                */
-
+                string soort = vars[0];
+                Point startpunt = new Point(int.Parse(vars[1]), int.Parse(vars[2]));
+                Point eindpunt = new Point(int.Parse(vars[3]), int.Parse(vars[4]));
+                Color kleur = Color.FromName(vars[5]);
+                string tekst = vars[6];
+              
+                Figure tempfig = new Figure(soort, startpunt, eindpunt, kleur, tekst);
+                savedList.Add(tempfig);
             }
 
             return savedList;
-
-            /*
-             * For lines in the file
-             * Read the line
-             * Make the strings into the appropriate variables (string, point, point, brush, string)
-             * Add them to a Figure object
-             * Add Figure object to list
-             */
         }
-
 
 
         public SchetsWin()

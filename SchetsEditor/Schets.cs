@@ -52,10 +52,10 @@ namespace SchetsEditor
         public String soort;
         public Point startpunt;
         public Point endpunt;
-        public Brush kleur;
+        public Color kleur;
         public String text;
 
-        public Figure(String tempSoort, Point tempStartpunt, Point tempEndpunt, Brush tempKleur, String tempText)
+        public Figure(String tempSoort, Point tempStartpunt, Point tempEndpunt, Color tempKleur, String tempText)
         {
             this.soort = tempSoort;
             this.startpunt = tempStartpunt;
@@ -66,22 +66,22 @@ namespace SchetsEditor
         public void DrawFigure(Graphics g)
         {
             if (this.soort == "RechthoekTool")                                                                                    //this line might activate VolRechthoekTools as well
-                g.DrawRectangle(TweepuntTool.MaakPen(this.kleur, 3), TweepuntTool.Punten2Rechthoek(this.startpunt, this.endpunt));
+                g.DrawRectangle(TweepuntTool.MaakPen(new SolidBrush(this.kleur), 3), TweepuntTool.Punten2Rechthoek(this.startpunt, this.endpunt));
             else if (this.soort == "VolRechthoekTool")                                                                            //instead of giving a type we might just use a string like if this.soort == "RechthoekTool"
-                g.FillRectangle(this.kleur, TweepuntTool.Punten2Rechthoek(this.startpunt, this.endpunt));
+                g.FillRectangle(new SolidBrush(this.kleur), TweepuntTool.Punten2Rechthoek(this.startpunt, this.endpunt));
             else if (this.soort == "CircleTool")
-                g.DrawEllipse(TweepuntTool.MaakPen(this.kleur, 3), TweepuntTool.Punten2Rechthoek(startpunt, endpunt));
+                g.DrawEllipse(TweepuntTool.MaakPen(new SolidBrush(this.kleur), 3), TweepuntTool.Punten2Rechthoek(startpunt, endpunt));
             else if (this.soort == "VolCircleTool")
-                g.FillEllipse(this.kleur, TweepuntTool.Punten2Rechthoek(this.startpunt, this.endpunt));
+                g.FillEllipse(new SolidBrush(this.kleur), TweepuntTool.Punten2Rechthoek(this.startpunt, this.endpunt));
             else if (this.soort == "LijnTool")
-                g.DrawLine(TweepuntTool.MaakPen(this.kleur, 3), this.startpunt, this.endpunt);
+                g.DrawLine(TweepuntTool.MaakPen(new SolidBrush(this.kleur), 3), this.startpunt, this.endpunt);
             else if (this.soort == "TekstTool")
             {
                 Font font = new Font("Tahoma", 40);
                 string tekst = this.text;
                 SizeF sz =
                 g.MeasureString(tekst, font, this.startpunt, StringFormat.GenericTypographic);
-                g.DrawString(tekst, font, this.kleur,
+                g.DrawString(tekst, font, new SolidBrush(this.kleur),
                                               this.startpunt, StringFormat.GenericTypographic);
                
                 g.DrawRectangle(Pens.Black, startpunt.X, startpunt.Y, sz.Width, sz.Height);     //this is for the gum TOOL
