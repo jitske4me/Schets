@@ -1,0 +1,4 @@
+C:\Users\jitsk\OneDrive\Documenten\Documents\Premaster AI\Imperatief Programmeren\C#\Inleveropdracht 3\SchetsEditor\obj\Debug\SchetsEditor2008.csprojAssemblyReference.cache
+C:\Users\jitsk\OneDrive\Documenten\Documents\Premaster AI\Imperatief Programmeren\C#\Inleveropdracht 3\SchetsEditor\obj\Debug\SchetsEditor.Properties.Resources.resources
+C:\Users\jitsk\OneDrive\Documenten\Documents\Premaster AI\Imperatief Programmeren\C#\Inleveropdracht 3\SchetsEditor\obj\Debug\SchetsEditor2008.csproj.GenerateResource.cache
+C:\Users\jitsk\OneDrive\Documenten\Documents\Premaster AI\Imperatief Programmeren\C#\Inleveropdracht 3\SchetsEditor\obj\Debug\SchetsEditor2008.csproj.CoreCompileInputs.cache

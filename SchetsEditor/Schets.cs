@@ -49,11 +49,11 @@ namespace SchetsEditor
     }
     public class Figure     //defining a type "figure", of which the objects will represent the user-drawn figures and stored in the figures list and painted on the bitmap from there.
     {
-        String soort;
-        Point startpunt;
-        Point endpunt;
-        Brush kleur;
-        String text;
+        public String soort;
+        public Point startpunt;
+        public Point endpunt;
+        public Brush kleur;
+        public String text;
 
         public Figure(String tempSoort, Point tempStartpunt, Point tempEndpunt, Brush tempKleur, String tempText)
         {

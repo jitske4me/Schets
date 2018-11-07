@@ -1,0 +1,15 @@
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;
+RechthoekTool;307;140;411;325;System.Drawing.SolidBrush;;

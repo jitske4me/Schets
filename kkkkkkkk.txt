@@ -1,0 +1,7 @@
+RechthoekTool;93;154;236;219;System.Drawing.SolidBrush;;
+RechthoekTool;93;154;236;219;System.Drawing.SolidBrush;;
+RechthoekTool;93;154;236;219;System.Drawing.SolidBrush;;
+RechthoekTool;93;154;236;219;System.Drawing.SolidBrush;;
+RechthoekTool;93;154;236;219;System.Drawing.SolidBrush;;
+RechthoekTool;93;154;236;219;System.Drawing.SolidBrush;;
+RechthoekTool;93;154;236;219;System.Drawing.SolidBrush;;
