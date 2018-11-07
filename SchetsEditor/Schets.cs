@@ -30,6 +30,7 @@ namespace SchetsEditor
                 gr.FillRectangle(Brushes.White, 0, 0, sz.Width, sz.Height);
                 gr.DrawImage(bitmap, 0, 0);
                 bitmap = nieuw;
+
             }
         }
         public void Teken(Graphics gr)

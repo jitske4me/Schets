@@ -93,10 +93,11 @@ namespace SchetsEditor
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {   g.DrawRectangle(MaakPen(kwast,3), TweepuntTool.Punten2Rechthoek(p1, p2));   //this will be replaced
-            schets.figures.Add(new Figure(new RechthoekTool(),p1,p2,kwast));                   //this is the replacement
-            foreach (var figure in figures)                                             //this is the replacement
-                figure.DrawFigure();                                                    //this is the replacement
-
+            
+           // schets.figures.Add(new Figure(new RechthoekTool(),p1,p2,kwast));                   //this is the replacement
+           // foreach (var figure in figures)                                             //this is the replacement
+           //     figure.DrawFigure();                                                    //this is the replacement
+              
         }
     }
     
