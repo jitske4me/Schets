@@ -87,12 +87,16 @@ namespace SchetsEditor
         }
     }
 
-    public class RechthoekTool : TweepuntTool
+    public class RechthoekTool : TweepuntTool       
     {
         public override string ToString() { return "kader"; }
 
         public override void Bezig(Graphics g, Point p1, Point p2)
-        {   g.DrawRectangle(MaakPen(kwast,3), TweepuntTool.Punten2Rechthoek(p1, p2));
+        {   g.DrawRectangle(MaakPen(kwast,3), TweepuntTool.Punten2Rechthoek(p1, p2));   //this will be replaced
+            schets.figures.Add(new Figure(new RechthoekTool(),p1,p2,kwast));                   //this is the replacement
+            foreach (var figure in figures)                                             //this is the replacement
+                figure.DrawFigure();                                                    //this is the replacement
+
         }
     }
     
@@ -102,6 +106,27 @@ namespace SchetsEditor
 
         public override void Compleet(Graphics g, Point p1, Point p2)
         {   g.FillRectangle(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
+            
+        }
+    }
+
+    public class CircleTool : TweepuntTool     
+    {                                           
+        public override string ToString() { return "ovaal"; }   
+
+        public override void Bezig (Graphics g, Point p1, Point p2)
+        {
+            g.DrawEllipse(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2)); 
+        }
+    }
+
+    public class VolCircleTool : TweepuntTool
+    {
+        public override string ToString() { return "ovaal2"; }   
+
+        public override void Bezig(Graphics g, Point p1, Point p2)
+        {
+            g.FillEllipse(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));    // is Punten2Rechthoek okay or should we write Punten2Circle?
         }
     }
 
@@ -123,13 +148,54 @@ namespace SchetsEditor
             this.MuisVast(s, p);
         }
     }
-    
+
+    //old gum tool
+    /*
     public class GumTool : PenTool
     {
         public override string ToString() { return "gum"; }
 
-        public override void Bezig(Graphics g, Point p1, Point p2)
+        public override void Bezig(Graphics g, Point p1, Point p2)      
         {   g.DrawLine(MaakPen(Brushes.White, 7), p1, p2);
         }
     }
+    */
+    
+    //new Gum Tool
+    public class GumTool : StartpuntTool                            // no need to be a pen or even a tweepunt tool anymore
+    {
+        public override string ToString() { return "gum"; }
+
+        public override void Letter(SchetsControl s, char c) { }   //they are only defined to make the ISchetsTool Interface happy
+        
+        public override void MuisDrag(SchetsControl s, Point p) { } //they are only defined to make the ISchetsTool Interface happy
+
+        // Figure selected;  
+        // for (i=figures.Length;i>0;i--)
+        //     if (figure[i].position == this.startpoint)
+        //          figures.delete[i]
+        //          break
+        // 
+        // invalidate(); //if necessary  
+
+
+        // instead of drawing on the bitmap, only a click position is recorded
+
+        //then the element / figure in the "list of all drawn figures" that corresponds to that position is removed from that list
+        //to be sophisticated you could go up the list from last to first and stop after you found a drawing this ensures only the last figure drawn there gets deleted.
+        //also when the bitmap is drawn from this list going down the list from first to last, later figures paint over earlier figures. nice.
+
+        //then the bitmap is forced to be redrawn on the basis of the new list with invalidate at the end of the event handler after the click event
+
+        //to do this, maybe the bitmap should be drawn from that list only
+
+        //the list that is necessary next to the bitmap also needs a mehtod that will reconstruct (or just construct) the bitmap based on that list.
+        //the method that draws a figure probably needs to be changed dramatically 
+
+        //do i need to write a new class called Figures? and then save each figure in the list?
+
+        
+        
+    }
+    
 }
