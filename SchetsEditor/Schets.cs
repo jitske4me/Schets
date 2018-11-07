@@ -29,6 +29,7 @@ namespace SchetsEditor
                 gr.FillRectangle(Brushes.White, 0, 0, sz.Width, sz.Height);
                 gr.DrawImage(bitmap, 0, 0);
                 bitmap = nieuw;
+
             }
         }
         public void Teken(Graphics gr)
@@ -48,11 +49,11 @@ namespace SchetsEditor
     }
     public class Figure     //defining a type "figure", of which the objects will represent the user-drawn figures and stored in the figures list and painted on the bitmap from there.
     {
-        String soort;
-        Point startpunt;
-        Point endpunt;
-        Brush kleur;
-        String text;
+        public String soort;
+        public Point startpunt;
+        public Point endpunt;
+        public Brush kleur;
+        public String text;
 
         public Figure(String tempSoort, Point tempStartpunt, Point tempEndpunt, Brush tempKleur, String tempText)
         {
@@ -74,6 +75,19 @@ namespace SchetsEditor
                 g.FillEllipse(this.kleur, TweepuntTool.Punten2Rechthoek(this.startpunt, this.endpunt));
             else if (this.soort == "LijnTool")
                 g.DrawLine(TweepuntTool.MaakPen(this.kleur, 3), this.startpunt, this.endpunt);
+            else if (this.soort == "TekstTool")
+            {
+                Font font = new Font("Tahoma", 40);
+                string tekst = this.text;
+                SizeF sz =
+                g.MeasureString(tekst, font, this.startpunt, StringFormat.GenericTypographic);
+                g.DrawString(tekst, font, this.kleur,
+                                              this.startpunt, StringFormat.GenericTypographic);
+               
+                g.DrawRectangle(Pens.Black, startpunt.X, startpunt.Y, sz.Width, sz.Height);     //this is for the gum TOOL
+                startpunt.X += (int)sz.Width;
+               
+            }
 
             
 

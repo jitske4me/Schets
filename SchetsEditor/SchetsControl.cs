@@ -23,7 +23,7 @@ namespace SchetsEditor
             this.BorderStyle = BorderStyle.Fixed3D;
             this.schets = new Schets();
             this.Paint += this.teken;
-            //DrawAll(figures);
+
             this.Resize += this.veranderAfmeting;
             this.veranderAfmeting(null, null);
         }

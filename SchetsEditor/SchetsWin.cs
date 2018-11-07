@@ -49,6 +49,10 @@ namespace SchetsEditor
             // format : public Figure(String tempSoort, Point tempStartpunt, Point tempEndpunt, Brush tempKleur, String tempText)
             // try catch erin?
 
+            //List <Figure> h = schetscontrol.figures;
+            //int x = schetscontrol.figures[entries].startpunt.X;
+
+
             SaveFileDialog dialoog = new SaveFileDialog();
             dialoog.Filter = "Tekstfiles|*.txt|Alle files|*.*";
             dialoog.Title = "Tekening opslaan als ...";
@@ -57,67 +61,94 @@ namespace SchetsEditor
             if (dialoog.ShowDialog() == DialogResult.OK)
             {
                 this.Text = dialoog.FileName;
-                //schrijfNaarTxt();
+                schrijfNaarTxt();
             }
 
+
+
         }
 
 
-        /*
+
         private void schrijfNaarTxt()
         {
-            int entries = schetscontrol.figures.Count;
-            Console.WriteLine(lengte);
-            
-            StreamWriter writer = new StreamWriter(this.Text);
-            
-            //schetscontrol.figures
-            for(int t = 0; t<entries; t++)
-            {
-                writer.WriteLine(schetscontrol.figures[o].tempSoort + ";"
-                                + ToString(schetscontrol.figures[o].tempStartpunt) + ";"
-                                + ToString(schetscontrol.figures[o].tempEndpunt) + ";"
-                                + ToString(schetscontrol.figures[o].tempKleur) + ";"
-                                + schetscontrol.figures[o].tempText + ";"
-                                );
-            }   
-            writer.Close();
-            
-        }
-        */
+            int entries = schetscontrol.figures.Count - 1;
+            Console.WriteLine(entries);
+            //Figure()
 
-        /*
+            StreamWriter writer = new StreamWriter(this.Text);
+
+
+            //schetscontrol.figures
+            for (int t = 0; t < entries; t++)
+            {
+                writer.WriteLine(schetscontrol.figures[t].soort + ";"
+                                + schetscontrol.figures[t].startpunt.X.ToString() + ";"
+                                + schetscontrol.figures[t].startpunt.Y.ToString() + ";"
+                                + schetscontrol.figures[t].endpunt.X.ToString() + ";"
+                                + schetscontrol.figures[t].endpunt.Y.ToString() + ";"
+                                + schetscontrol.figures[t].kleur.ToString() + ";"
+                                + schetscontrol.figures[t].text + ";"
+                                );
+            }
+
+            writer.Close();
+
+        }
+
         private void open(object obj, EventArgs ea)
         {
             OpenFileDialog dialoog = new OpenFileDialog();
             dialoog.Filter = "Tekstfiles|*.txt|Alle files|*.*";
             dialoog.Title = "Tekening openen...";
-            if(dialoog.ShowDialog() == DialogResult.OK)
+            if (dialoog.ShowDialog() == DialogResult.OK)
             {
-                List <Figure> templist;
-                templist = new List<Figure> {};
-                templist.leesVanTxt(dialoog.FileName);
-                schetscontrol.figures = templist; 
+                List<Figure> templist;
+                templist = new List<Figure> { };
+                leesVanTxt(templist, dialoog.FileName);
+                schetscontrol.figures = templist;
             }
         }
-               
-        private leesVanTxt(List <Figure> list, string fileNaam)
+
+        private List<Figure> leesVanTxt(List<Figure> list, string fileNaam)
         {
             StreamReader reader = new StreamReader(fileNaam);
-            while((line = reader.Readline()) != 0)
+            List<Figure> savedList = new List<Figure> { };
+
+            string line;
+            while ((line = reader.ReadLine()) != null)
             {
-                string[] vars = line.split(';');
-                
+                string[] vars = line.Split(';');
+                //Figure tempfig = new Figure();
+
+                //Figure.soort = vars[0];
+                //Figure.startpunt.X = vars[1];
+
+                /*
+                schetscontrol.figures[t].soort + ";"
+                                + schetscontrol.figures[t].startpunt.X.ToString() + ";"
+                                + schetscontrol.figures[t].startpunt.Y.ToString() + ";"
+                                + schetscontrol.figures[t].endpunt.X.ToString() + ";"
+                                + schetscontrol.figures[t].endpunt.Y.ToString() + ";"
+                                + schetscontrol.figures[t].kleur.ToString() + ";"
+                                + schetscontrol.figures[t].text + ";"
+                            
+                */
+
             }
+
+            return savedList;
+
             /*
              * For lines in the file
              * Read the line
              * Make the strings into the appropriate variables (string, point, point, brush, string)
              * Add them to a Figure object
              * Add Figure object to list
-             *
+             */
         }
-        */
+
+
 
         public SchetsWin()
         {
@@ -179,7 +210,7 @@ namespace SchetsEditor
             menu.MergeAction = MergeAction.MatchOnly;
             menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
             menu.DropDownItems.Add("Opslaan", null, this.opslaan);
-            //menu.DropDownItems.Add("Open", null, this.open);
+            menu.DropDownItems.Add("Open", null, this.open);
             menuStrip.Items.Add(menu);
         }
 
