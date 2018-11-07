@@ -42,6 +42,8 @@ namespace SchetsEditor
             this.Close();
         }
 
+       
+
         private void opslaan(object obj, EventArgs ea)
         {
             // format : public Figure(String tempSoort, Point tempStartpunt, Point tempEndpunt, Brush tempKleur, String tempText)
@@ -50,19 +52,28 @@ namespace SchetsEditor
             SaveFileDialog dialoog = new SaveFileDialog();
             dialoog.Filter = "Tekstfiles|*.txt|Alle files|*.*";
             dialoog.Title = "Tekening opslaan als ...";
+
+            
             if (dialoog.ShowDialog() == DialogResult.OK)
             {
                 this.Text = dialoog.FileName;
-                this.schrijfNaarTxt();
+                //schrijfNaarTxt();
             }
+            
         }
 
+        
+        /*
         private void schrijfNaarTxt()
         {
+            int entries = schetscontrol.figures.Count;
+            Console.WriteLine(lengte);
+
+            
             StreamWriter writer = new StreamWriter(this.Text);
             
             //schetscontrol.figures
-            foreach(object o in schetscontrol.figures)
+            for(int t = 0; t<entries; t++)
             {
                 writer.WriteLine(schetscontrol.figures[o].tempSoort + ";"
                                 + ToString(schetscontrol.figures[o].tempStartpunt) + ";"
@@ -72,9 +83,13 @@ namespace SchetsEditor
                                 );
             }   
             writer.Close();
+            
         }
 
+        */
         
+        /*
+
         private void open(object obj, EventArgs ea)
         {
             OpenFileDialog dialoog = new OpenFileDialog();
@@ -96,7 +111,7 @@ namespace SchetsEditor
             while((line = reader.Readline()) != 0)
             {
                 string[] vars = line.split(';');
-                this 
+                
 
 
             }
@@ -106,28 +121,10 @@ namespace SchetsEditor
              * Make the strings into the appropriate variables (string, point, point, brush, string)
              * Add them to a Figure object
              * Add Figure object to list
-             */
+             *
         }
 
-
-        /*
-         * 
-         * 
-        private void open(object sender, EventArgs e)
-        {
-            OpenFileDialog dialoog = new OpenFileDialog();
-            dialoog.Filter = "Tekstfiles|*.txt|Alle files|*.*";
-            dialoog.Title = "Tekst openen...";
-            if (dialoog.ShowDialog() == DialogResult.OK)
-        {
-            Tekst t = new Tekst();
-            t.MdiParent = this;
-            t.LeesVanFile(dialoog.FileName);
-            t.Show();
-        }
-         * 
-         */
-
+        */
 
         public SchetsWin()
         {
@@ -185,7 +182,7 @@ namespace SchetsEditor
             menu.MergeAction = MergeAction.MatchOnly;
             menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
             menu.DropDownItems.Add("Opslaan", null, this.opslaan);
-            menu.DropDownItems.Add("Open", null, this.open);
+            //menu.DropDownItems.Add("Open", null, this.open);
             menuStrip.Items.Add(menu);
         }
 
