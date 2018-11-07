@@ -92,11 +92,17 @@ namespace SchetsEditor
     {
         public override string ToString() { return "kader"; }
 
-        public override void Bezig(Graphics g, Point p1, Point p2)
-        {   g.DrawRectangle(MaakPen(kwast,3), TweepuntTool.Punten2Rechthoek(p1, p2));   //this will be replaced
-            schets.figures.Add(new Figure(new RechthoekTool(),p1,p2,kwast));                   //this is the replacement
-            foreach (var figure in figures)                                             //this is the replacement
-                figure.DrawFigure();                                                    //this is the replacement
+        public override void Bezig(SchetsControl s, Graphics g, Point p1, Point p2)
+        {   //g.DrawRectangle(MaakPen(kwast,3), TweepuntTool.Punten2Rechthoek(p1, p2));       //this will be replaced
+            //the problem is  figures is (or should be)a property of a schets object! but in this class is no schets object! this thing kinda needs to be in SchetsControl ! (has UserControl de bitmap bewerking as well?)
+            // The tool methods get the schetsControl as a parameter ! that's how they acces the bitmap!
+            s.figures.Add(new Figure("RechthoekTool",p1,p2,kwast,""));                           //this is the replacement           
+            s.figures.ForEach(Console.WriteLine);
+            Console.ReadLine();
+            for (int i = 0; i < s.figures.Count; i++)                                        //this is the replacement
+            {
+                s.figures[i].DrawFigure(g);
+            }                                                                               //this is the replacement
 
         }
     }
@@ -155,7 +161,6 @@ namespace SchetsEditor
     public class GumTool : PenTool
     {
         public override string ToString() { return "gum"; }
-
         public override void Bezig(Graphics g, Point p1, Point p2)      
         {   g.DrawLine(MaakPen(Brushes.White, 7), p1, p2);
         }
