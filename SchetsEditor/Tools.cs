@@ -81,11 +81,10 @@ namespace SchetsEditor
         {
         }
         public abstract void Bezig(SchetsControl s, Graphics g, Point p1, Point p2);     //added SchetsControl as a parameter to Bezig, since they need the figures-list of the schetscontrol object
-        
-        
-        public virtual void Compleet(SchetsControl s,Graphics g, Point p1, Point p2)        //added SchetsControl as a parameter to complete, since they need the figures-list of the schetscontrol object
-        {   this.Bezig(s, g, p1, p2);
-        }
+
+
+        public abstract void Compleet(SchetsControl s, Graphics g, Point p1, Point p2);        //added SchetsControl as a parameter to complete, since they need the figures-list of the schetscontrol object
+
     }
 
     public class RechthoekTool : TweepuntTool       
@@ -93,17 +92,17 @@ namespace SchetsEditor
         public override string ToString() { return "kader"; }
 
         public override void Bezig(SchetsControl s, Graphics g, Point p1, Point p2)
-        {   //g.DrawRectangle(MaakPen(kwast,3), TweepuntTool.Punten2Rechthoek(p1, p2));       //this will be replaced
-            //the problem is  figures is (or should be)a property of a schets object! but in this class is no schets object! this thing kinda needs to be in SchetsControl ! (has UserControl de bitmap bewerking as well?)
-            // The tool methods get the schetsControl as a parameter ! that's how they acces the bitmap!
-            s.figures.Add(new Figure("RechthoekTool",p1,p2,kwast,""));                           //this is the replacement           
-            s.figures.ForEach(Console.WriteLine);
-            Console.ReadLine();
-            for (int i = 0; i < s.figures.Count; i++)                                        //this is the replacement
+        {   g.DrawRectangle(MaakPen(kwast,3), TweepuntTool.Punten2Rechthoek(p1, p2));      
+           
+        }
+        public override void Compleet(SchetsControl s, Graphics g, Point p1, Point p2)
+        {
+
+            s.figures.Add(new Figure("RechthoekTool", p1, p2, kwast, ""));                              
+            for (int i = 0; i < s.figures.Count; i++)                                      
             {
                 s.figures[i].DrawFigure(g);
-            }                                                                               //this is the replacement
-
+            }                                                                         
         }
     }
     
@@ -112,8 +111,12 @@ namespace SchetsEditor
         public override string ToString() { return "vlak"; }
 
         public override void Compleet(SchetsControl s,Graphics g, Point p1, Point p2)
-        {   g.FillRectangle(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
-            
+        {   //g.FillRectangle(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
+            s.figures.Add(new Figure("VolRechthoekTool", p1, p2, kwast, ""));
+            for (int i = 0; i < s.figures.Count; i++)
+            {
+                s.figures[i].DrawFigure(g);
+            }
         }
     }
 
@@ -125,26 +128,51 @@ namespace SchetsEditor
         {
             g.DrawEllipse(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2)); 
         }
+        public override void Compleet(SchetsControl s, Graphics g, Point p1, Point p2)
+        {
+            s.figures.Add(new Figure("CircleTool", p1, p2, kwast, ""));
+            for (int i = 0; i < s.figures.Count; i++)
+            {
+                s.figures[i].DrawFigure(g);
+            }
+        }
     }
 
     public class VolCircleTool : TweepuntTool
     {
-        public override string ToString() { return "ovaal2"; }   
+        public override string ToString() { return "ovaal2"; }
 
         public override void Bezig(SchetsControl s, Graphics g, Point p1, Point p2)
         {
-            g.FillEllipse(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));    // is Punten2Rechthoek okay or should we write Punten2Circle?
+            g.FillEllipse(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
+        }
+        public override void Compleet(SchetsControl s, Graphics g, Point p1, Point p2)
+        {
+            s.figures.Add(new Figure("VolCircleTool", p1, p2, kwast, ""));
+            for (int i = 0; i < s.figures.Count; i++)
+            {
+                s.figures[i].DrawFigure(g);
+            }
         }
     }
 
-    public class LijnTool : TweepuntTool
-    {
-        public override string ToString() { return "lijn"; }
+        public class LijnTool : TweepuntTool
+        {
+            public override string ToString() { return "lijn"; }
 
-        public override void Bezig(SchetsControl s, Graphics g, Point p1, Point p2)
-        {   g.DrawLine(MaakPen(this.kwast,3), p1, p2);
+            public override void Bezig(SchetsControl s, Graphics g, Point p1, Point p2)
+            {
+                g.DrawLine(MaakPen(this.kwast, 3), p1, p2);
+            }
+            public override void Compleet(SchetsControl s, Graphics g, Point p1, Point p2)
+            {
+                s.figures.Add(new Figure("LijnTool", p1, p2, kwast, ""));
+                for (int i = 0; i < s.figures.Count; i++)
+                {
+                    s.figures[i].DrawFigure(g);
+                }
+            }
         }
-    }
 
     public class PenTool : LijnTool
     {
@@ -154,6 +182,16 @@ namespace SchetsEditor
         {   this.MuisLos(s, p);
             this.MuisVast(s, p);
         }
+        
+        public override void Compleet(SchetsControl s, Graphics g, Point p1, Point p2)
+        {
+            s.figures.Add(new Figure("PenTool", p1, p2, kwast, ""));
+            for (int i = 0; i < s.figures.Count; i++)
+            {
+                s.figures[i].DrawFigure(g);
+            }
+        }
+        
     }
 
     //old gum tool
@@ -183,15 +221,14 @@ namespace SchetsEditor
         public override void Letter(SchetsControl s, char c) { }   //they are only defined to make the ISchetsTool Interface happy
         
         public override void MuisDrag(SchetsControl s, Point p) { } //they are only defined to make the ISchetsTool Interface happy
-
-        // Figure selected;  
-        // for (i=figures.Length;i>0;i--)
-        //     if (figure[i].position == this.startpoint)
-        //          figures.delete[i]
-        //          break
-        // 
-        // invalidate(); //if necessary  
-        
+        /*
+        for (i=figures.Count;i>0;i--)
+             if (figure[i].position == this.startpoint)
+                  figures.delete[i]
+                  break
+         
+         invalidate(); //if necessary  
+        */
         
     }
     
