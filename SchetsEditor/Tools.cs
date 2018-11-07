@@ -70,20 +70,21 @@ namespace SchetsEditor
         }
         public override void MuisDrag(SchetsControl s, Point p)
         {   s.Refresh();
-            this.Bezig(s.CreateGraphics(), this.startpunt, p);
+            this.Bezig(s,s.CreateGraphics(), this.startpunt, p);        //added SchetsControl as a parameter to Bezig, since they need the figures-list of the schetscontrol object
         }
         public override void MuisLos(SchetsControl s, Point p)
         {   base.MuisLos(s, p);
-            this.Compleet(s.MaakBitmapGraphics(), this.startpunt, p);
+            this.Compleet(s,s.MaakBitmapGraphics(), this.startpunt, p);     //added SchetsControl as a parameter to Bezig, since they need the figures-list of the schetscontrol object
             s.Invalidate();
         }
         public override void Letter(SchetsControl s, char c)
         {
         }
-        public abstract void Bezig(Graphics g, Point p1, Point p2);
+        public abstract void Bezig(SchetsControl s, Graphics g, Point p1, Point p2);     //added SchetsControl as a parameter to Bezig, since they need the figures-list of the schetscontrol object
         
-        public virtual void Compleet(Graphics g, Point p1, Point p2)
-        {   this.Bezig(g, p1, p2);
+        
+        public virtual void Compleet(SchetsControl s,Graphics g, Point p1, Point p2)        //added SchetsControl as a parameter to complete, since they need the figures-list of the schetscontrol object
+        {   this.Bezig(s, g, p1, p2);
         }
     }
 
@@ -93,11 +94,10 @@ namespace SchetsEditor
 
         public override void Bezig(Graphics g, Point p1, Point p2)
         {   g.DrawRectangle(MaakPen(kwast,3), TweepuntTool.Punten2Rechthoek(p1, p2));   //this will be replaced
-            
-           // schets.figures.Add(new Figure(new RechthoekTool(),p1,p2,kwast));                   //this is the replacement
-           // foreach (var figure in figures)                                             //this is the replacement
-           //     figure.DrawFigure();                                                    //this is the replacement
-              
+            schets.figures.Add(new Figure(new RechthoekTool(),p1,p2,kwast));                   //this is the replacement
+            foreach (var figure in figures)                                             //this is the replacement
+                figure.DrawFigure();                                                    //this is the replacement
+
         }
     }
     
@@ -105,7 +105,7 @@ namespace SchetsEditor
     {
         public override string ToString() { return "vlak"; }
 
-        public override void Compleet(Graphics g, Point p1, Point p2)
+        public override void Compleet(SchetsControl s,Graphics g, Point p1, Point p2)
         {   g.FillRectangle(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
             
         }
@@ -115,7 +115,7 @@ namespace SchetsEditor
     {                                           
         public override string ToString() { return "ovaal"; }   
 
-        public override void Bezig (Graphics g, Point p1, Point p2)
+        public override void Bezig (SchetsControl s, Graphics g, Point p1, Point p2)
         {
             g.DrawEllipse(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2)); 
         }
@@ -125,7 +125,7 @@ namespace SchetsEditor
     {
         public override string ToString() { return "ovaal2"; }   
 
-        public override void Bezig(Graphics g, Point p1, Point p2)
+        public override void Bezig(SchetsControl s, Graphics g, Point p1, Point p2)
         {
             g.FillEllipse(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));    // is Punten2Rechthoek okay or should we write Punten2Circle?
         }
@@ -135,7 +135,7 @@ namespace SchetsEditor
     {
         public override string ToString() { return "lijn"; }
 
-        public override void Bezig(Graphics g, Point p1, Point p2)
+        public override void Bezig(SchetsControl s, Graphics g, Point p1, Point p2)
         {   g.DrawLine(MaakPen(this.kwast,3), p1, p2);
         }
     }
@@ -163,6 +163,13 @@ namespace SchetsEditor
     */
     
     //new Gum Tool
+    // instead of drawing on the bitmap, only a click position is recorded
+    //then the element / figure in the "list of all drawn figures" that corresponds to that position is removed from that list
+    //to be sophisticated you could go up the list from last to first and stop after you found a drawing this ensures only the last figure drawn there gets deleted.
+    //also when the bitmap is drawn from this list going down the list from first to last, later figures paint over earlier figures. nice.
+    //to do this, maybe the bitmap should be drawn from that list only
+    //the list that is necessary next to the bitmap also needs a mehtod that will reconstruct (or just construct) the bitmap based on that list.
+    //the method that draws a figure probably needs to be changed dramatically 
     public class GumTool : StartpuntTool                            // no need to be a pen or even a tweepunt tool anymore
     {
         public override string ToString() { return "gum"; }
@@ -178,23 +185,6 @@ namespace SchetsEditor
         //          break
         // 
         // invalidate(); //if necessary  
-
-
-        // instead of drawing on the bitmap, only a click position is recorded
-
-        //then the element / figure in the "list of all drawn figures" that corresponds to that position is removed from that list
-        //to be sophisticated you could go up the list from last to first and stop after you found a drawing this ensures only the last figure drawn there gets deleted.
-        //also when the bitmap is drawn from this list going down the list from first to last, later figures paint over earlier figures. nice.
-
-        //then the bitmap is forced to be redrawn on the basis of the new list with invalidate at the end of the event handler after the click event
-
-        //to do this, maybe the bitmap should be drawn from that list only
-
-        //the list that is necessary next to the bitmap also needs a mehtod that will reconstruct (or just construct) the bitmap based on that list.
-        //the method that draws a figure probably needs to be changed dramatically 
-
-        //do i need to write a new class called Figures? and then save each figure in the list?
-
         
         
     }
